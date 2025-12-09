@@ -1,0 +1,11 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    { "type": "Feature",
+      "properties": { "name": "Main Haul Road" },
+      "geometry": { "type": "LineString", "coordinates": [
+        [77.5943,12.9713],[77.5951,12.9719],[77.5960,12.9725]
+      ]}
+    }
+  ]
+}

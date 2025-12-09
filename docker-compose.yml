@@ -1,0 +1,54 @@
+# docker-compose.yml (minimal shape that matches your stack)
+name: rockfalltwin
+
+services:
+  db:
+    image: timescale/timescaledb:latest-pg15
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mine
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mine"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - DB_DSN=postgresql://postgres:postgres@db:5432/mine
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: ["uvicorn","main:app","--host","0.0.0.0","--port","8000"]
+
+  weatherfetch:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - DB_DSN=postgresql://postgres:postgres@db:5432/mine
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["python","-u","/app/weather_fetcher.py"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend

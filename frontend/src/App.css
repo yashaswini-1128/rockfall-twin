@@ -1,0 +1,16 @@
+:root { color-scheme: dark; }
+body { background:#0b1220; color:#e7eefc; font-family: Inter, system-ui, sans-serif; }
+.page { max-width:1200px; margin:24px auto; padding:0 16px; }
+h1 { font-weight:800; letter-spacing:.2px; }
+.pillbar { display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin:16px 0 24px; }
+.pill { background:#121a2b; border:1px solid #1d2740; padding:14px; border-radius:14px; }
+.pill-title { font-size:12px; opacity:.8; margin-bottom:6px; }
+.pill-value { font-weight:700; font-size:18px; }
+.pill-value.low { color:#47d16c; }
+.pill-value.medium { color:#ffcc4d; }
+.pill-value.high { color:#f16b6b; }
+.pill-controls { display:flex; gap:8px; align-items:center; }
+.pill-controls input { background:#0f1725; border:1px solid #253053; color:#e7eefc; border-radius:8px; padding:6px 8px; width:140px; }
+.pill-controls button { background:#2c63ff; border:0; color:white; padding:8px 10px; border-radius:10px; cursor:pointer; }
+.grid { display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+.card { background:#0f1725; border:1px solid #1d2740; border-radius:16px; padding:12px; }
